@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff8e1;
+  --foreground: #2a1a0e;
+  --muted: #8b7355;
+  --cream: #fffbc0;
+  --cream-deep: #f8f3ec;
+  --sage: #6b8c6b;
+  --sage-deep: #4a6b4a;
+  --orange: #ff640d;
+  --purple: #4800ff;
+  --card: #fffdf6;
+  --line: rgba(42, 26, 14, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-cream: var(--cream);
+  --color-cream-deep: var(--cream-deep);
+  --color-sage: var(--sage);
+  --color-sage-deep: var(--sage-deep);
+  --color-orange: var(--orange);
+  --color-purple: var(--purple);
+  --color-card: var(--card);
+  --color-line: var(--line);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-heading: var(--font-display);
+  --font-mono: var(--font-mono);
+  --font-poster: var(--font-poster);
+  --font-script: var(--font-script);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+@keyframes bite-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes bite-rise {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bite-sheet {
+  from {
+    transform: translateY(18px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bite-pulse-soft {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.04);
+  }
+}
+
+.bite-rise {
+  animation: bite-rise 0.45s ease-out;
+}
+
+.bite-sheet {
+  animation: bite-sheet 0.35s ease-out;
+}
+
+.bite-breathe {
+  animation: bite-breathe 4.5s ease-in-out infinite;
+}
+
+.press:active {
+  transform: scale(0.97);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.pixel-art {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bite-rise,
+  .bite-sheet,
+  .bite-breathe {
+    animation: none !important;
+  }
+}
