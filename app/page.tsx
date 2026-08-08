@@ -22,11 +22,13 @@ import {
   Loader,
   Search,
   Shuffle,
+  Youtube,
   Zap,
 } from "react-feather";
 import {
   ALLERGY_OPTIONS,
   CRAVINGS,
+  CUISINE_OPTIONS,
   EFFORT_OPTIONS,
   INDULGENCE_OPTIONS,
   TIME_OPTIONS,
@@ -60,6 +62,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({
     craving: "all",
+    cuisine: "all",
     diet: "all",
     allergy: "all",
     time: "all",
@@ -69,7 +72,16 @@ export default function Home() {
 
   const filteredRecipes = useMemo(() => {
     return recipes.filter((recipe) => {
-      if (filters.craving !== "all" && recipe.craving !== filters.craving) {
+      if (filters.craving === "sweet") {
+        // Sweet path: only recipes explicitly tagged sweet (never savory curries)
+        if (recipe.craving !== "sweet") return false;
+      } else if (
+        filters.craving !== "all" &&
+        recipe.craving !== filters.craving
+      ) {
+        return false;
+      }
+      if (filters.cuisine !== "all" && recipe.cuisine !== filters.cuisine) {
         return false;
       }
       if (filters.diet === "veg") {
@@ -120,7 +132,8 @@ export default function Home() {
     setStep("results");
     setSelected(null);
     setFilters({
-      craving: "all",
+      craving: options.surprise ? "all" : options.craving ?? "all",
+      cuisine: "all",
       diet: "all",
       allergy: "all",
       time: "all",
@@ -333,6 +346,7 @@ function ResultsView({
   recipes: Recipe[];
   filters: {
     craving: string;
+    cuisine: string;
     diet: string;
     allergy: string;
     time: string;
@@ -342,6 +356,7 @@ function ResultsView({
   setFilters: Dispatch<
     SetStateAction<{
       craving: string;
+      cuisine: string;
       diet: string;
       allergy: string;
       time: string;
@@ -362,6 +377,15 @@ function ResultsView({
           options={[
             { value: "all", label: "All" },
             ...CRAVINGS.map((c) => ({ value: c.id, label: c.label })),
+          ]}
+        />
+        <FilterSelect
+          label="Cuisine"
+          value={filters.cuisine}
+          onChange={(value) => setFilters((f) => ({ ...f, cuisine: value }))}
+          options={[
+            { value: "all", label: "All" },
+            ...CUISINE_OPTIONS.map((c) => ({ value: c.id, label: c.label })),
           ]}
         />
         <FilterSelect
@@ -507,7 +531,7 @@ function RecipeCard({
       <div className="w-full space-y-2.5 px-1 text-center sm:text-left">
         <div>
           <p className="text-[10px] font-semibold tracking-[0.14em] text-muted uppercase">
-            {recipe.category}
+            {recipe.cuisine} · {recipe.category}
           </p>
           <h3 className="mt-1 font-[family-name:var(--font-display)] text-lg leading-snug text-foreground sm:text-xl">
             {recipe.name}
@@ -627,6 +651,20 @@ function RecipeDetail({
             ))}
           </ol>
         </div>
+
+        {recipe.youtubeUrl ? (
+          <a
+            href={recipe.youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="press inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-sage/25 bg-sage/10 px-5 py-3.5 text-sm font-semibold text-sage-deep transition-colors hover:bg-sage/15"
+          >
+            <Youtube size={16} strokeWidth={2} />
+            {recipe.youtubeUrl.includes("/results?search_query=")
+              ? "Find video on YouTube"
+              : "Watch on YouTube"}
+          </a>
+        ) : null}
 
         <div>
           <SectionLabel icon={<AlertTriangle size={12} strokeWidth={2} />}>

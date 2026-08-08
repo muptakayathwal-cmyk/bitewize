@@ -5,6 +5,16 @@ export type DietType = "veg" | "non-veg" | "either";
 export type RecipeDiet = "veg" | "vegan" | "non-veg";
 export type Indulgence = "healthy" | "balanced" | "indulgent";
 
+export type CuisineId =
+  | "indian"
+  | "mexican"
+  | "american"
+  | "italian"
+  | "chinese"
+  | "thai"
+  | "mediterranean"
+  | "other";
+
 export type CravingId =
   | "spicy"
   | "sweet"
@@ -32,6 +42,7 @@ export interface Recipe {
   id: string;
   name: string;
   category: string;
+  cuisine: CuisineId;
   description: string;
   imagePrompt: string;
   imageUrl: string;
@@ -43,6 +54,7 @@ export interface Recipe {
   ingredients: RecipeIngredient[];
   steps: string[];
   allergens: string[];
+  youtubeUrl?: string;
 }
 
 export interface RecipesResponse {

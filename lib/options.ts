@@ -1,4 +1,9 @@
-import type { CravingId, EffortLevel, Indulgence } from "./types";
+import type {
+  CravingId,
+  CuisineId,
+  EffortLevel,
+  Indulgence,
+} from "./types";
 
 export const CRAVINGS: {
   id: CravingId;
@@ -42,6 +47,17 @@ export const CRAVINGS: {
     color: "#FF8A00",
     hint: "Crisp bite",
   },
+];
+
+export const CUISINE_OPTIONS: { id: CuisineId; label: string }[] = [
+  { id: "indian", label: "Indian" },
+  { id: "mexican", label: "Mexican" },
+  { id: "american", label: "American" },
+  { id: "italian", label: "Italian" },
+  { id: "chinese", label: "Chinese" },
+  { id: "thai", label: "Thai" },
+  { id: "mediterranean", label: "Mediterranean" },
+  { id: "other", label: "Other" },
 ];
 
 export const ALLERGY_OPTIONS = [
