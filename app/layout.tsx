@@ -6,6 +6,7 @@ import {
   Playfair_Display,
   Plus_Jakarta_Sans,
 } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const body = Plus_Jakarta_Sans({
@@ -51,7 +52,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${body.variable} ${display.variable} ${mono.variable} ${poster.variable} ${script.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
